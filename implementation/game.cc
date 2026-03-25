@@ -505,6 +505,10 @@ bool Game::improveCriterion(Player *player, int criterion_num) {
     if (criteria[criterion_num]->getLevel() == 1) {
         if (player->getResource(LECTURE) >= 2 && player->getResource(STUDY) >= 3) {
             player->buyCriteria(criteria[criterion_num]);
+            ostringstream s;
+            s << player->getInitial() << criteria[criterion_num]->getLevelInitial();
+            Board *board = new AssessmentDecorator {b, criterion_num, s.str()};
+            updateBoard(board);
             return true;
         } else {
             return false;
@@ -512,6 +516,10 @@ bool Game::improveCriterion(Player *player, int criterion_num) {
     } else if (player->getResource(CAFFEINE) >= 3 && player->getResource(LAB) >= 2 && player->getResource(LECTURE) >= 2 && 
                player->getResource(TUTORIAL) >= 1 && player->getResource(STUDY) >= 2) {
         player->buyCriteria(criteria[criterion_num]);
+        ostringstream s;
+        s << player->getInitial() << criteria[criterion_num]->getLevelInitial();
+        Board *board = new AssessmentDecorator {b, criterion_num, s.str()};
+        updateBoard(board);
         return true;
     } else {
         return false;
