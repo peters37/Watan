@@ -251,14 +251,20 @@ void Player::loseResources(ostream &out) {
     std::shuffle(all_resources.begin(), all_resources.end(), g);
     std::vector<int> lost_resources = {0, 0, 0, 0, 0};
     for (int i = 0; i < lost_number; ++i) {
-        changeResource(i, -1);
+        changeResource(all_resources[i], -1);
         lost_resources[all_resources[i]] += 1;
     }
     outputLostResources(lost_resources, out);
 }
 
 ostream &Player::outputLostResources(std::vector<int> lost_resources, ostream &out) {
-    out << "Student " << player << " loses " << lost_resources.size() << " resources to the geese. They lose:" << endl;
+    int diff_resources_lost = 0;
+    for (int i = 0; i < lost_resources.size(); ++i) {
+        if (lost_resources[i] != 0) {
+            ++diff_resources_lost;
+        }
+    }
+    out << "Student " << player << " loses " << diff_resources_lost << " resources to the geese. They lose:" << endl;
     for (int i = 0; i < lost_resources.size(); ++i) {
         if (lost_resources[i] != 0) {
             out << lost_resources[i] << " " << convert_resource(i) << "." << endl;
